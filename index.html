@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Corridors, Not Detours: Bounding Language Preferences by Local Opportunity and Embodiment. Research by Pranay Meshram and Karthik Dantu, University at Buffalo.">
+<meta name="theme-color" content="#005bbb">
+<title>Corridors, Not Detours | University at Buffalo</title>
+<link rel="icon" href="static/images/drones_logo.png">
+<link rel="stylesheet" href="static/css/bulma.min.css">
+<link rel="stylesheet" href="static/css/index.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="hero">
+  <div class="hero-body page-shell has-text-centered">
+    <p class="eyebrow">Bridging Perspectives in Navigation · IROS 2026</p>
+    <h1 class="title publication-title">Corridors, Not Detours</h1>
+    <p class="publication-subtitle">Bounding Language Preferences by<br class="desktop-break"> Local Opportunity and Embodiment</p>
+    <p class="publication-authors"><a href="https://pranayspeed.github.io/">Pranay Meshram</a><span aria-hidden="true"> · </span><a href="https://dkkarthik.github.io/">Karthik Dantu</a></p>
+    <p class="affiliation">University at Buffalo</p>
+    <div class="logo-row"><a href="https://www.buffalo.edu/"><img src="static/images/ub_logo.png" alt="University at Buffalo"></a><a href="https://drones.cse.buffalo.edu/"><img src="static/images/drones_logo.png" alt="Drones Lab"></a></div>
+    <div class="publication-links"><a class="button is-dark is-rounded" href="static/pdfs/Corridors_Not_Detours_Extended_Abstract.pdf">Extended abstract ↗</a><a class="button is-dark is-rounded" href="static/pdfs/Corridors_Not_Detours_Poster.pdf">Poster ↗</a><a class="button is-rounded" href="#results">Explore results ↓</a></div>
+    <p class="intro-copy">The same request can produce different safe routes.<br>Local opportunity bounds the response. Robot consequences determine which response is feasible.</p>
+    <figure class="hero-figure"><img src="static/images/project/framework.png" alt="Proposed two-stage framework connecting language, terrain and robot context to local attention and global route selection"><figcaption>Local cross-attention grounds region representations; global attention scores bounded routes. The current evaluation begins from typed intents.</figcaption></figure>
+  </div>
+</header>
+<main id="content">
+<section class="section soft"><div class="page-shell text-rail">
+  <p class="eyebrow">The idea</p><h2 class="title is-3">Transfer the requested value.<br>Ground the route in the map and the robot.</h2>
+  <div class="content"><p>Outdoor operators describe preferences such as <em>avoid severe slopes</em> or <em>preserve energy</em>. Yet an instruction alone does not determine a useful route: a suitable alternative may not exist near the start–goal query, and different robots experience the same terrain differently.</p><p>We present ongoing work on <strong>corridor-feasible language alignment</strong>. A semantic region graph exposes bounded alternatives, separating transferable mission values from environment- and embodiment-dependent route consequences. Preferences without meaningful local opportunity are reported as unsupported rather than inducing arbitrary detours.</p><p>Robot-specific Jackal and Spot cost models are trained using simulated traversal data. Initial held-out results support corridor-bounded adaptation from typed physical intents. Free-form language grounding and physical robot validation remain future work.</p></div>
+</div></section>
+<section id="method" class="section"><div class="page-shell">
+  <p class="eyebrow">01 / Corridor contract</p><h2 class="title is-3">Bound the alternatives before selecting the route</h2>
+  <p class="section-intro">A method-independent corridor is fixed using robot, distance, and objective-specific lower-bound routes. Candidate routes must satisfy the active robot’s mobility constraints and traversal-cost budget.</p>
+  <figure><img class="wide-figure" loading="lazy" src="static/images/project/corridor_opportunity.png" alt="Fix the corridor, measure available local opportunity, and select a bounded response"><figcaption>The poster’s corridor example retains the selected route inside the opportunity-bounded corridor and the 1.25× path-length cap.</figcaption></figure>
+  <div class="contract-grid"><article><span>GROUND</span><h3>Requested values</h3><p>Relate the preference to terrain properties on a connected semantic-geometric graph.</p></article><article><span>EXPOSE</span><h3>Feasible alternatives</h3><p>Measure how much improvement is available relative to the neutral route.</p></article><article><span>SCORE</span><h3>Robot consequences</h3><p>Evaluate complete routes using the active robot’s energy, risk and mobility model.</p></article><article><span>ABSTAIN</span><h3>Insufficient opportunity</h3><p>Make a lack of meaningful local alternatives explicit.</p></article></div>
+  <p class="method-note">The prototype uses the <a href="https://droneslab.github.io/CLEAR/">CLEAR semantic-geometric abstraction</a> to bind preferences and robot consequences to connected, elevation-aware terrain regions.</p>
+</div></section>
+<section class="section soft"><div class="page-shell">
+  <p class="eyebrow">02 / Grounded routes</p><h2 class="title is-3">Same local opportunity. Different grounded response.</h2>
+  <figure class="case"><h3>Terrain intent</h3><p>“Prefer forested terrain while remaining robot-feasible.”</p><a href="static/images/project/terrain_intent.png"><img loading="lazy" src="static/images/project/terrain_intent.png" alt="Lower-bound routes and selected Spot and Jackal routes for a forest preference"></a><figcaption>Both robots increase forest exposure while remaining near their feasible length lower bounds. Illustrative held-out simulated terrain request.</figcaption></figure>
+  <figure class="case"><h3>Robot-conditioned risk</h3><p>“Minimize traversal risk for the active robot.”</p><a href="static/images/project/robot_intent.png"><img loading="lazy" src="static/images/project/robot_intent.png" alt="Spot and Jackal route responses to a robot-specific risk request on the same query"></a><figcaption>Spot and Jackal select different responses within their own feasible corridors on the same simulated query.</figcaption></figure>
+</div></section>
+<section id="results" class="section"><div class="page-shell">
+  <p class="eyebrow">03 / Initial evidence</p><h2 class="title is-3">Response, opportunity and robot feasibility</h2>
+  <p class="section-intro">Held-out simulation evaluates typed slope, roughness and traction intents with separate wheeled and legged robot cost models.</p>
+  <div class="metric-grid"><article><strong>94.6%</strong><h3>Directional response</h3><p>95% CI: 93.4–95.8%<br>2,519 actionable atomic cases</p></article><article><strong>0.146</strong><h3>Mean CBIR</h3><p>95% CI: 0.133–0.160<br>2,505 referenced cases</p></article><article><strong>All routes</strong><h3>Within simulated budget</h3><p>Every selected route satisfies the simulated robot-cost budget.</p></article></div>
+  <div class="scope-strip"><span><b>8</b> unseen terrain maps</span><span><b>90</b> endpoint-pair clusters</span><span><b>1,882</b> compound cases</span><span><b>Jackal + Spot</b> embodiments</span></div>
+  <div class="metric-explain"><article><h3>What counts as a response?</h3><p>The preference gain must reach both an absolute floor of 0.005 and 10% of the available local opportunity.</p><div class="equation">Responseᵢ = 𝟙[gainᵢ ≥ max(0.005, 0.10 × opportunityᵢ)]</div></article><article><h3>How much improvement is recovered?</h3><p>Corridor-Bounded Intent Regret (CBIR) compares the chosen route with an approximate objective-specific reference from the same feasible alternatives.</p><div class="equation">CBIR = (g(chosen) − g(reference)) / (g(neutral) − g(reference))</div><p><strong>0 = reference · 1 = neutral · lower is better.</strong> CBIR applies when the reference improves on neutral routing.</p></article></div>
+  <aside class="scope-note"><strong>Scope of the evidence.</strong> These results establish bounded directional response in simulation. They do not measure unrestricted language understanding, human-preference accuracy or physical calibration, and do not establish superiority over other planning methods. Compound requests are less reliable, especially when all requested properties must improve simultaneously.</aside>
+</div></section>
+<section class="section soft"><div class="page-shell">
+  <p class="eyebrow">04 / Validation agenda</p><h2 class="title is-3">The next tests</h2>
+  <div class="agenda-grid"><article><h3>Generalization</h3><p>Independent maps and sensor conditions, including cases with no meaningful alternative.</p></article><article><h3>Embodiment</h3><p>Paired Jackal–Spot trials on the same maps and instructions, measuring physical outcomes.</p></article><article><h3>Alignment</h3><p>Blinded human route comparisons, including disagreement and inter-rater reliability.</p></article><article><h3>Matched controls</h3><p>Comparisons with adaptive search and existing language-conditioned cost-map methods.</p></article></div>
+</div></section>
+<section id="poster" class="section"><div class="page-shell poster-layout"><div><p class="eyebrow">Read the work</p><h2 class="title is-3">The full picture</h2><p>Explore the research framing, method and initial evidence in the extended abstract and poster.</p><div class="download-links"><a href="static/pdfs/Corridors_Not_Detours_Extended_Abstract.pdf">Read extended abstract (PDF) ↗</a><a href="static/pdfs/Corridors_Not_Detours_Poster.pdf">Open 48-inch poster (PDF) ↗</a><a href="mailto:pranaywa@buffalo.edu">Contact Pranay Meshram ↗</a></div></div><a href="static/pdfs/Corridors_Not_Detours_Poster.pdf"><img loading="lazy" class="poster-preview" src="static/images/project/poster_preview.png" alt="Full Corridors, Not Detours research poster; select to open the original PDF"></a></div></section>
+</main>
+<footer class="footer"><div class="page-shell"><p><strong>Corridors, Not Detours</strong> · University at Buffalo · Drones Lab</p><p>Adapted from the CLEAR project page and the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template">Academic Project Page Template</a>.</p></div></footer>
+</body>
+</html>
